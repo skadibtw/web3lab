@@ -1,20 +1,12 @@
 
-<svg height="400" width="400" xmlns="http://www.w3.org/2000/svg">
+<svg height="400" width="400" xmlns="http://www.w3.org/2000/svg" id="graph" class="shadow-graph" style="pointer-events: none">
     <line x1="150" y1="0" x2="150" y2="300" stroke="black" stroke-width="2"/>
     <line x1="0" y1="150" x2="300" y2="150" stroke="black" stroke-width="2"/>
 
     <polygon points="150,0 145,10 155,10" fill="black"/>
     <polygon points="300,150 290,145 290,155" fill="black"/>
 
-    <line x1="150" y1="50" x2="155" y2="50" stroke="black" stroke-width="1"/> <!-- Верхняя -->
-    <line x1="150" y1="100" x2="155" y2="100" stroke="black" stroke-width="1"/> <!-- Верхняя R/2 -->
-    <line x1="150" y1="200" x2="155" y2="200" stroke="black" stroke-width="1"/> <!-- Нижняя R/2 -->
-    <line x1="150" y1="250" x2="155" y2="250" stroke="black" stroke-width="1"/> <!-- Нижняя -->
 
-    <line x1="50" y1="145" x2="50" y2="155" stroke="black" stroke-width="1"/> <!-- Левая -->
-    <line x1="100" y1="145" x2="100" y2="155" stroke="black" stroke-width="1"/> <!-- Левая R/2 -->
-    <line x1="200" y1="145" x2="200" y2="155" stroke="black" stroke-width="1"/> <!-- Правая R/2 -->
-    <line x1="250" y1="145" x2="250" y2="155" stroke="black" stroke-width="1"/> <!-- Правая -->
 
     <path id="quarterCircle" d="M 150 150 L 150 200 A 100 100 0 0 1 100 150 Z" fill="blue" fill-opacity="0.5"/>
     <polygon id="rectangle" points="150,150 150,250 200,250 200,150" fill="blue" fill-opacity="0.5"/>

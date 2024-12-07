@@ -1,4 +1,3 @@
-document.addEventListener("DOMContentLoaded", function () {
     document.getElementById('click_catcher').addEventListener('mousemove', evt => {
     let target = evt.target;
 
@@ -7,8 +6,9 @@ document.addEventListener("DOMContentLoaded", function () {
     const height = offset.bottom - offset.top;
 
     evt.target = target;
-    let x = (evt.pageX - offset.left - width / 2) / (width / 2) * (5 / 2 * 3);
-    let y = -((evt.pageY - offset.top - height / 2) / (height / 2) * (5 / 2 * 3));
+        let x = ((evt.pageX - offset.left - 150) / 120) * (5 / 2);
+        let y = -((evt.pageY - offset.top - 150) / 120) * (5 / 2);
+
 
     drawOMarker(x, y);
 
@@ -48,8 +48,8 @@ function drawOMarker(x, y) {
     const svg = document.getElementById('graph');
 
     let circle = document.createElementNS("http://www.w3.org/2000/svg", 'circle');
-    circle.setAttributeNS(null, 'cx', ((x) * 20 + 150).toString());
-    circle.setAttributeNS(null, 'cy', (-y * 20 + 150).toString());
+    circle.setAttributeNS(null, 'cx', ((x) * 23 + 160).toString());
+    circle.setAttributeNS(null, 'cy', (-y * 23 + 160).toString());
     circle.setAttributeNS(null, 'r', '8');
     circle.setAttributeNS(null, 'stroke', 'rgb(174, 193, 187)');
     circle.setAttributeNS(null, 'stroke-width', '5');
@@ -67,8 +67,8 @@ function drawDot(x, y, checked) {
     const svg = document.getElementById('graph');
 
     let circle = document.createElementNS("http://www.w3.org/2000/svg", 'circle');
-    circle.setAttributeNS(null, 'cx', ((x) * 20 + 150).toString());
-    circle.setAttributeNS(null, 'cy', (-y * 20 + 150).toString());
+    circle.setAttributeNS(null, 'cx', ((x) * 23 + 160).toString());
+    circle.setAttributeNS(null, 'cy', (-y * 23 + 160).toString());
     circle.setAttributeNS(null, 'r', '4');
     circle.classList.add("littleDot");
 
@@ -106,5 +106,5 @@ function redrawFigure(scale) {
         "points",
         `${70 - radius},150 150,150 150,${120 - radius}`
     );
-}});
 
+}

@@ -8,15 +8,13 @@
       xmlns:ui="http://java.sun.com/jsf/facelets">
     <h:head>
         <title>Лаба3</title>
-        <meta name="theme-color" content="#ffffff"/>
-
         <link rel="stylesheet" href="index.css"/>
     </h:head>
     <h:body>
         <div class="content">
             <div class="results-content">
                 <div style="padding: 1rem">
-                    <h:button type="button" class="round confirm-colors" outcome="toIndex"/>
+                    <h:button type="button" class="round confirm-colors" outcome="toIndex" value="back"/>
                     <h:form id="main-form">
                         <div class="form-inputs">
                             <div id="click_catcher">
@@ -65,10 +63,10 @@
                                 </h:panelGrid>
                             </div>
                             <div class="form-buttons">
-                                <h:commandButton class="round confirm-colors material-icons"
+                                <h:commandButton class="round confirm-colors"
                                                  id="btn_cfrm" value="отправить" action="#{pointBean.calc()}"
                                 />
-                                <h:commandButton class="round reset-colors material-icons"
+                                <h:commandButton class="round reset-colors"
                                                  id="btn_rst" value="очистить" action="#{pointBean.reset()}"
                                 />
                             </div>
@@ -96,7 +94,7 @@
                             #{res.r}
                         </h:column>
                         <h:column>
-                            <f:facet name="header">Входит?</f:facet>
+                            <f:facet name="header">Попал?</f:facet>
                             #{res.insideArea? "Да" : "Нет"}
                         </h:column>
                         <h:column>

@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css?family=Open+Sans&display=swap');
 
 :root {
-    --bg: #121212;
+    --bg: #555555;
     --fg: #ffffff;
     --primary: #90caf9;
     --primary-dark: #42a5f5;
@@ -95,7 +95,7 @@ html {
     transition: ease 200ms;
 }
 
-.text-input, .logo, .box-visual, button, hr, .btn {
+.logo, .box-visual, button, hr, .btn {
     box-shadow: 5px 5px 5px 5px rgba(34, 16, 38, 0.25);
 }
 
