@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core"
+      xmlns:p="primefaces"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:head>
+        <title>Лаба3</title>
+        <meta name="theme-color" content="#ffffff"/>
+
+        <link rel="stylesheet" href="index.css"/>
+    </h:head>
+    <h:body>
+        <div class="content">
+            <div class="results-content">
+                <div style="padding: 1rem">
+                    <h:button type="button" class="round confirm-colors" outcome="toIndex"/>
+                    <h:form id="main-form">
+                        <div class="form-inputs">
+                            <div id="click_catcher">
+                                <ui:include src="graph.svg"/>
+                            </div>
+                            <div>
+                                <p>Выберите X (-4 ... 4):</p>
+                                <div>
+                                    <p:selectOneRadio value="#{pointBean.x}" layout="lineDirection">
+                                    <f:selectItem itemLabel="-4" itemValue="-4"/>
+                                    <f:selectItem itemLabel="-3" itemValue="-3"/>
+                                    <f:selectItem itemLabel="-2" itemValue="-2"/>
+                                    <f:selectItem itemLabel="-1" itemValue="-1"/>
+                                    <f:selectItem itemLabel="0" itemValue="0"/>
+                                    <f:selectItem itemLabel="1" itemValue="1"/>
+                                    <f:selectItem itemLabel="2" itemValue="2"/>
+                                    <f:selectItem itemLabel="3" itemValue="3"/>
+                                    <f:selectItem itemLabel="4" itemValue="4"/>
+                                        <f:validateRequired/>
+                                        <f:validateDoubleRange minimum="-5" maximum="5"/>
+                                </p:selectOneRadio>
+                                </div>
+                            </div>
+                            <div>
+                                <p>Введите Y (-5 ... 5):</p>
+                                <div>
+                                    <h:inputText class="text-input invert-colors"
+                                                 value="#{pointBean.y}">
+                                        <f:validateRequired/>
+                                        <f:validateDoubleRange minimum="-5" maximum="5"/>
+                                    </h:inputText>
+                                </div>
+                            </div>
+                            <div>
+                                <p>Введите R:</p>
+                                <h:panelGrid columns="1">
+                                    <h:inputText id="options" value="#{pointBean.r}">
+                                        <f:validateDoubleRange minimum="1" maximum="4"/>
+                                        <f:validateRequired/>
+                                    </h:inputText>
+                                    <p:slider id="superSlider" for="options" minValue="1" maxValue="4" step="0.25"
+                                              style="width: 100%" onSlide="handleSlide(event)">
+                                        <f:validateRequired/>
+                                        <f:validateDoubleRange minimum="1" maximum="4"/>
+                                    </p:slider>
+                                </h:panelGrid>
+                            </div>
+                            <div class="form-buttons">
+                                <h:commandButton class="round confirm-colors material-icons"
+                                                 id="btn_cfrm" value="отправить" action="#{pointBean.calc()}"
+                                />
+                                <h:commandButton class="round reset-colors material-icons"
+                                                 id="btn_rst" value="очистить" action="#{pointBean.reset()}"
+                                />
+                            </div>
+                        </div>
+                    </h:form>
+                    <h:form id="hidden-form">
+                        <h:inputHidden value="#{pointBean.x}" id="graph-x"/>
+                        <h:inputHidden value="#{pointBean.y}" id="graph-y"/>
+                        <h:inputHidden value="#{pointBean.r}" id="graph-r"/>
+                        <h:commandButton id="graph-send" action="#{pointBean.calc()}" style="opacity: 0"/>
+                    </h:form></div>
+                <div style="flex: 1">
+                    <h:dataTable class="result-table" id="result" var="res" value="#{pointBean.bigList}"
+                                 style="width: 100%">
+                        <h:column>
+                            <f:facet name="header">X</f:facet>
+                            #{res.x}
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Y</f:facet>
+                            #{res.y}
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">R</f:facet>
+                            #{res.r}
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Входит?</f:facet>
+                            #{res.insideArea? "Да" : "Нет"}
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Время</f:facet>
+                            #{res.timestamp}
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Выполнение</f:facet>
+                            #{res.executionTime} нс
+                        </h:column>
+                    </h:dataTable>
+                </div>
+            </div>
+        </div>
+        <script type="text/javascript" src="script/script.js"/>
+        <script type="text/javascript"> redrawFigure(#{pointBean.r}); </script>
+        <ui:repeat value="#{pointBean.bigList}" var="i">
+            <script type="text/javascript"> drawDot("#{i.x}", "#{i.y}", #{i.insideArea});</script>
+        </ui:repeat>
+    </h:body>
+
+</html>
