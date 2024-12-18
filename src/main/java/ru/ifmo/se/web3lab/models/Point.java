@@ -90,7 +90,11 @@ public class Point implements Serializable {
 
     public void calc() {
         long now = System.nanoTime();
-        insideArea = ((x <= 0 && x >= (-r)) && (y >= 0 && y <= r / 2) && (Math.pow(x, 2) + Math.pow(y, 2) - Math.pow(r, 2) <= 0) ||
+        double a = r/2;
+        double b = -r;
+        double c = Math.sqrt(Math.pow(a, 2) + Math.pow(b, 2));
+
+        insideArea = (((x <= 0 && x >= (-r)) && (y >= 0 && y <= r / 2) && (y <= 0.5*x + r/2)) ||
                 (x >= 0 && y <= 0 && x <= r/2 && y >= (-r)) ||
                 (x <= 0 && y <= 0 && (Math.pow(x, 2) + Math.pow(y, 2) <= Math.pow(r / 2, 2)))) && (x >= -4 && x <= 4 && y >= -5 && y <= 5 && r >= 1 && r <= 4);
 
