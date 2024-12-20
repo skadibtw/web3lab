@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css?family=Open+Sans&display=swap');
 
 :root {
-    --bg: #555555;
+    --bg: #212121;
     --fg: #ffffff;
     --primary: #90caf9;
     --primary-dark: #42a5f5;
@@ -150,7 +150,14 @@ button, .btn {
 .incorrect-input-notif {
     color: var(--error);
 }
-
+.ui-input-invalid {
+    color: var(--error);
+}
+.ui-state-error {
+    background-color: var(--error);
+    color: var(--fg);
+    border: 2px solid var(--error-dark);
+}
 .clock, .clock-date {
     font-family: 'Jost', sans-serif;
     text-align: center;
@@ -194,18 +201,6 @@ body .ui-radiobutton .ui-radiobutton-box.ui-state-active .ui-icon-bullet {
 
 body .ui-radiobutton .ui-radiobutton-box.ui-state-active.ui-state-hover {
     background: var(--bg);
-}
-
-.cmdlink {
-    margin-right: 20px;
-}
-
-.cmdlink:link, .cmdlink:visited, .cmdlink:hover {
-    color: var(--bg);
-}
-
-.cmdlink:active {
-    color: var(--error);
 }
 
 .spinner .ui-spinner-button {

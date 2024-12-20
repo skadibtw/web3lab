@@ -25,7 +25,7 @@ function drawGrid() {
 }
 
 function drawAxes() {
-    ctx.strokeStyle = '#000000';
+    ctx.strokeStyle = '#ffffff';
     ctx.beginPath();
     ctx.moveTo(Xcanvas / 2, 0);
     ctx.lineTo(Xcanvas / 2, Ycanvas);
@@ -65,7 +65,7 @@ function drawShapes() {
 function drawLabels() {
     const scale = (Xcanvas / 2) * (R / 5);
     ctx.font = '16px Arial';
-    ctx.fillStyle = '#000000';
+    ctx.fillStyle = '#ffffff';
 
     ctx.fillText('-R', Xcanvas / 2 - scale, Ycanvas / 2 + 20);
     ctx.fillText('-R/2', Xcanvas / 2 - scale / 2, Ycanvas / 2 + 20);

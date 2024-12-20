@@ -41,11 +41,13 @@
                     <div>
                         <p>Введите Y (-5 ... 5):</p>
                         <div>
-                            <h:inputText class="text-input invert-colors"
+                            <p:inputText id="yInput"
+                                         class="text-input invert-colors"
                                          value="#{pointBean.y}">
                                 <f:validateRequired/>
                                 <f:validateDoubleRange minimum="-5" maximum="5"/>
-                            </h:inputText>
+                            </p:inputText>
+                            <p:message for="yInput" display="text" styleClass="incorrect-input-notif"/>
                         </div>
                     </div>
                     <div>
