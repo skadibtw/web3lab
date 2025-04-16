@@ -1,0 +1,123 @@
+<project name="web3lab" default="build" basedir="." xmlns:antcontrib="antlib:net.sf.antcontrib">
+<property file="build.properties"/>
+
+       <path id="antcontrib.classpath">
+           <pathelement location="${lib.dir}/ant-contrib.jar"/>
+       </path>
+
+
+    <taskdef
+           uri="antlib:net.sf.antcontrib"
+           resource="net/sf/antcontrib/antlib.xml"
+           classpathref="antcontrib.classpath"/>
+
+    <!-- новые свойства для WAR -->
+    <property name="war.name" value="${project.name}.war"/>
+    <property name="webapp.src.dir" value="${basedir}/src/main/webapp"/>
+    <property name="web.xml" value="${webapp.src.dir}/WEB-INF/web.xml"/>
+
+    <!-- CLEAN -->
+    <target name="clean">
+        <delete dir="${classes.dir}"/>
+        <delete dir="${dist.dir}"/>
+        <delete dir="${locale.dest.dir}"/>
+        <delete dir="${revs.dir}"/>
+    </target>
+    <target name="resolve-deps" description="Copy Maven deps to lib">
+        <echo message="Resolving dependencies into ${lib.dir}…"/>
+        <mkdir dir="${lib.dir}"/>
+        <exec executable="mvn.cmd" failonerror="true">
+            <arg value="dependency:copy-dependencies"/>
+            <arg value="-DoutputDirectory=${lib.dir}"/>
+        </exec>
+    </target>
+
+    <!-- COMPILE -->
+    <target name="compile">
+        <mkdir dir="${classes.dir}"/>
+        <javac srcdir="${src.dir}" destdir="${classes.dir}" includeAntRuntime="false">
+            <classpath>
+                <fileset dir="${lib.dir}" includes="**/*.jar"/>
+            </classpath>
+        </javac>
+    </target>
+
+    <!-- NATIVE2ASCII -->
+    <target name="native2ascii">
+        <mkdir dir="${locale.dest.dir}"/>
+           <apply executable="${java.home}/bin/native2ascii" failonerror="true">
+               <arg value="-encoding"/>
+               <arg value="${native2ascii.encoding}"/>
+              <srcfile/>
+               <targetfile/>
+               <mapper type="glob" from="*.properties" to="*.properties"/>
+               <fileset dir="${locale.src.dir}" includes="**/*.properties"/>
+           </apply>
+    </target>
+
+    <!-- BUILD: compile + war -->
+    <target name="build" depends="compile,native2ascii">
+        <mkdir dir="${dist.dir}"/>
+        <!-- собираем WAR вместо JAR -->
+        <war destfile="${dist.dir}/${war.name}" webxml="${web.xml}">
+            <classes dir="${classes.dir}"/>
+            <lib dir="${lib.dir}"/>
+            <fileset dir="${webapp.src.dir}" excludes="WEB-INF/web.xml"/>
+        </war>
+    </target>
+
+    <!-- TEST: build + junit -->
+    <target name="test" depends="build">
+        <mkdir dir="${dist.dir}/test-reports"/>
+        <junit printsummary="yes" haltonfailure="yes">
+            <classpath>
+                <pathelement path="${classes.dir}"/>
+                <fileset dir="${lib.dir}" includes="junit-*.jar"/>
+            </classpath>
+            <batchtest todir="${dist.dir}/test-reports">
+                <fileset dir="${test.dir}" includes="**/*Test.java"/>
+            </batchtest>
+            <formatter type="plain"/>
+            <formatter type="xml"/>
+        </junit>
+    </target>
+
+    <!-- TEAM: checkout last N revs, build each and zip -->
+    <target name="team" depends="clean">
+        <mkdir dir="${revs.dir}"/>
+        <!-- get last revs -->
+        <exec executable="git" outputproperty="git.revs.raw">
+            <arg value="rev-list"/>
+            <arg value="--max-count=${revs.count}"/>
+            <arg value="HEAD"/>
+        </exec>
+           <!-- use ant‑contrib to replace newlines with commas -->
+           <antcontrib:propertyregex
+              property="git.revs"
+               input="${git.revs.raw}"
+               regexp="\r?\n"
+               replace=","
+               global="true"/>
+        <antcontrib:for list="${git.revs}" param="rev">
+            <sequential>
+                <echo>Building revision @{rev}</echo>
+                <exec executable="git">
+                    <arg value="checkout"/>
+                    <arg value="@{rev}"/>
+                </exec>
+                <antcall target="build">
+                    <param name="dist.dir" value="${revs.dir}/@{rev}"/>
+                </antcall>
+            </sequential>
+        </antcontrib:for>
+
+        <!-- restore HEAD -->
+        <exec executable="git">
+            <arg value="checkout"/>
+            <arg value="-"/>
+        </exec>
+
+
+        <zip destfile="${dist.dir}/${zip.name}" basedir="${revs.dir}"/>
+    </target>
+</project>
