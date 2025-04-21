@@ -1,6 +1,4 @@
 <project name="web3lab" default="build" basedir="." xmlns:antcontrib="antlib:net.sf.antcontrib">
-    <property name="webapp.src.dir" location="src/main/webapp"/>
-    <property name="web.xml"       location="${webapp.src.dir}/WEB-INF/web.xml"/>
 <property file="build.properties"/>
 
        <path id="antcontrib.classpath">
@@ -12,6 +10,13 @@
            uri="antlib:net.sf.antcontrib"
            resource="net/sf/antcontrib/antlib.xml"
            classpathref="antcontrib.classpath"/>
+
+    <!-- новые свойства для WAR -->
+    <property name="war.name" value="${project.name}.war"/>
+    <property name="webapp.src.dir" value="${basedir}/src/main/webapp"/>
+    <property name="web.xml" value="${webapp.src.dir}/WEB-INF/web.xml"/>
+    <property name="test.src.dir" value="${basedir}/test/java"/>
+    <property name="test.classes.dir" value="${basedir}/test-classes"/>
 
     <!-- CLEAN -->
     <target name="clean">
@@ -57,7 +62,7 @@
     <!-- BUILD: compile + war -->
     <target name="build" depends="compile,native2ascii">
         <mkdir dir="${dist.dir}"/>
-        <!-- собираем WAR -->
+        <!-- собираем WAR вместо JAR -->
         <war destfile="${dist.dir}/${war.name}" webxml="${web.xml}">
             <classes dir="${classes.dir}"/>
             <lib dir="${lib.dir}"/>
@@ -65,16 +70,28 @@
         </war>
     </target>
 
-    <!-- TEST: build + junit -->
-    <target name="test" depends="build">
+    <!-- Таргет для компиляции тестов -->
+    <target name="compile-tests" depends="compile">
+        <mkdir dir="${test.classes.dir}"/>
+        <javac srcdir="${test.src.dir}" destdir="${test.classes.dir}" includeAntRuntime="false">
+            <classpath>
+                <pathelement path="${classes.dir}"/>
+                <fileset dir="${lib.dir}" includes="**/*.jar"/>
+            </classpath>
+        </javac>
+    </target>
+
+    <!-- Обновите таргет test -->
+    <target name="test" depends="build, compile-tests">
         <mkdir dir="${dist.dir}/test-reports"/>
         <junit printsummary="yes" haltonfailure="yes">
             <classpath>
                 <pathelement path="${classes.dir}"/>
-                <fileset dir="${lib.dir}" includes="junit-*.jar"/>
+                <pathelement path="${test.classes.dir}"/>
+                <fileset dir="${lib.dir}" includes="**/*.jar"/>
             </classpath>
             <batchtest todir="${dist.dir}/test-reports">
-                <fileset dir="${test.dir}" includes="**/*Test.java"/>
+                <fileset dir="${test.classes.dir}" includes="**/*Test.class"/>
             </batchtest>
             <formatter type="plain"/>
             <formatter type="xml"/>

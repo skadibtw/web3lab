@@ -4,9 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c2d6e1bd-4609-4422-956e-95f64f0c445e" name="Changes" comment="native2ascii done">
+    <list default="true" id="c2d6e1bd-4609-4422-956e-95f64f0c445e" name="Changes" comment="oh no..">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/i18n/messages.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/i18n/messages.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.xml" beforeDir="false" afterPath="$PROJECT_DIR$/build.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -46,7 +46,7 @@
   "keyToString": {
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "gev",
+    "git-widget-placeholder": "master",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/user/IdeaProjects/web3lab/lib",
     "node.js.detected.package.eslint": "true",
@@ -54,10 +54,10 @@
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "SDKs",
+    "project.structure.last.edited": "Libraries",
     "project.structure.proportion": "0.0",
     "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "settings.editor.selected.configurable": "project.scopes",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -98,7 +98,7 @@
       <workItem from="1744825948288" duration="1808000" />
       <workItem from="1744828629617" duration="1948000" />
       <workItem from="1745161636554" duration="30000" />
-      <workItem from="1745230832234" duration="6313000" />
+      <workItem from="1745230832234" duration="1179000" />
     </task>
     <task id="LOCAL-00001" summary="oh no..">
       <option name="closed" value="true" />
@@ -108,23 +108,7 @@
       <option name="project" value="LOCAL" />
       <updated>1744835394284</updated>
     </task>
-    <task id="LOCAL-00002" summary="no tests and native2ascii - ?">
-      <option name="closed" value="true" />
-      <created>1745232284953</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1745232284953</updated>
-    </task>
-    <task id="LOCAL-00003" summary="native2ascii done">
-      <option name="closed" value="true" />
-      <created>1745237450183</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1745237450183</updated>
-    </task>
-    <option name="localTasksCounter" value="4" />
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -139,8 +123,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="oh no.." />
-    <MESSAGE value="no tests and native2ascii - ?" />
-    <MESSAGE value="native2ascii done" />
-    <option name="LAST_COMMIT_MESSAGE" value="native2ascii done" />
+    <option name="LAST_COMMIT_MESSAGE" value="oh no.." />
   </component>
 </project>
