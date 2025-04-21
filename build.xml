@@ -40,6 +40,10 @@
                 <fileset dir="${lib.dir}" includes="**/*.jar"/>
             </classpath>
         </javac>
+        <!-- COPY ALL RESOURCES SO PERSISTENCE.XML ENDS UP IN META-INF -->
+        <copy todir="${classes.dir}">
+            <fileset dir="src/main/resources" includes="**/*"/>
+        </copy>
     </target>
 
     <!-- NATIVE2ASCII -->
