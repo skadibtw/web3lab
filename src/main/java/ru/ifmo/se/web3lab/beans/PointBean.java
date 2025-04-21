@@ -16,7 +16,7 @@ public class PointBean implements Serializable {
     private double y;
     private double r;
     private ArrayList<Point> pointsList;
-    private DBManager dbManager;
+    protected DBManager dbManager;
 
     @PostConstruct
     public void init() {
