@@ -59,12 +59,19 @@
 
     <!-- BUILD: compile + war -->
     <target name="build" depends="compile,native2ascii">
+            <echo message"BUILD STARTED"/>
+
         <mkdir dir="${dist.dir}"/>
         <!-- собираем WAR вместо JAR -->
         <war destfile="${dist.dir}/${war.name}" webxml="${web.xml}">
             <classes dir="${classes.dir}"/>
             <lib dir="${lib.dir}"/>
             <fileset dir="${webapp.src.dir}" excludes="WEB-INF/web.xml"/>
+             <manifest>
+                <attribute name="Created-By" value="${created.by}"/>
+                <attribute name="Manifest-Version" value="${manifest.version}"/>
+                <attribute name="Main-Class" value="${main.class}"/>
+            </manifest>
         </war>
     </target>
 
