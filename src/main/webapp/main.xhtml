@@ -1,18 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <html lang="en"
+    xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets">
 <h:head>
-    <title>Лаба3</title>
+    <f:loadBundle basename="i18n.messages" var="msg"/>
+    <title>#{msg['main.title']}</title>
     <link rel="stylesheet" href="index.css"/>
 </h:head>
 <h:body>
     <div class="content">
         <div class="results-content">
             <div style="padding: 1rem">
-                <h:button type="button" class="round confirm-colors" outcome="toIndex" value="back"/>
+                <h:button type="button" class="round confirm-colors" outcome="toIndex" value="#{msg['button.back']}"/>
                 <h:form id="main-form">
                     <div class="greatCanvas">
                         <div class="canvasContainer">
@@ -21,7 +23,7 @@
                         </div>
                     </div>
                     <div>
-                        <p>Выберите X (-4 ... 4):</p>
+                        <p>#{msg['main.selectX']}</p>
                         <div>
                             <p:selectOneRadio value="#{pointBean.x}" layout="lineDirection">
                                 <f:selectItem itemLabel="-4" itemValue="-4"/>
@@ -39,7 +41,7 @@
                         </div>
                     </div>
                     <div>
-                        <p>Введите Y (-5 ... 5):</p>
+                        <p>#{msg['main.enterY']}</p>
                         <div>
                             <p:inputText id="yInput"
                                          class="text-input invert-colors"
@@ -51,7 +53,7 @@
                         </div>
                     </div>
                     <div>
-                        <p>Введите R:</p>
+                        <p>#{msg['main.enterR']}</p>
                         <h:panelGrid columns="1">
                             <h:inputText id="options" value="3">
                                 <f:validateDoubleRange minimum="1" maximum="4"/>
@@ -64,9 +66,9 @@
                     </div>
                     <div class="form-buttons">
                         <h:commandButton class="round confirm-colors"
-                                         id="btn_cfrm" value="отправить" action="#{pointBean.calc()}"/>
+                                         id="btn_cfrm" value="#{msg['button.submit']}" action="#{pointBean.calc()}"/>
                         <h:commandButton class="round reset-colors"
-                                         id="btn_rst" value="очистить" action="#{pointBean.reset()}"/>
+                                         id="btn_rst" value="#{msg['button.clear']}" action="#{pointBean.reset()}"/>
                     </div>
                 </h:form>
                 <h:form id="hidden-form">
@@ -78,32 +80,44 @@
             </div>
             <div style="flex: 1">
                 <h:dataTable class="result-table" id="result" var="res" value="#{pointBean.bigList}"
-                             style="width: 100%">
-                    <h:column>
-                        <f:facet name="header">X</f:facet>
-                        #{res.x}
-                    </h:column>
-                    <h:column>
-                        <f:facet name="header">Y</f:facet>
-                        #{res.y}
-                    </h:column>
-                    <h:column>
-                        <f:facet name="header">R</f:facet>
-                        #{res.r}
-                    </h:column>
-                    <h:column>
-                        <f:facet name="header">Попал?</f:facet>
-                        #{res.insideArea ? "Да" : "Нет"}
-                    </h:column>
-                    <h:column>
-                        <f:facet name="header">Время</f:facet>
-                        #{res.timestamp}
-                    </h:column>
-                    <h:column>
-                        <f:facet name="header">Выполнение</f:facet>
-                        #{res.executionTime} нс
-                    </h:column>
-                </h:dataTable>
+                 style="width: 100%">
+        <h:column>
+            <f:facet name="header">
+                <h:outputText value="#{msg['table.header.x']}"/>
+            </f:facet>
+            #{res.x}
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+                <h:outputText value="#{msg['table.header.y']}"/>
+            </f:facet>
+            #{res.y}
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+                <h:outputText value="#{msg['table.header.r']}"/>
+            </f:facet>
+            #{res.r}
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+                <h:outputText value="#{msg['table.header.inside']}"/>
+            </f:facet>
+            #{res.insideArea ? msg['table.value.yes'] : msg['table.value.no']}
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+                <h:outputText value="#{msg['table.header.time']}"/>
+            </f:facet>
+            #{res.timestamp}
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+                <h:outputText value="#{msg['table.header.execTime']}"/>
+            </f:facet>
+            #{res.executionTime} #{msg['table.unit.ns']}
+        </h:column>
+    </h:dataTable>
             </div>
         </div>
     </div>

@@ -1,4 +1,6 @@
 <project name="web3lab" default="build" basedir="." xmlns:antcontrib="antlib:net.sf.antcontrib">
+    <property name="webapp.src.dir" location="src/main/webapp"/>
+    <property name="web.xml"       location="${webapp.src.dir}/WEB-INF/web.xml"/>
 <property file="build.properties"/>
 
        <path id="antcontrib.classpath">
@@ -10,11 +12,6 @@
            uri="antlib:net.sf.antcontrib"
            resource="net/sf/antcontrib/antlib.xml"
            classpathref="antcontrib.classpath"/>
-
-    <!-- новые свойства для WAR -->
-    <property name="war.name" value="${project.name}.war"/>
-    <property name="webapp.src.dir" value="${basedir}/src/main/webapp"/>
-    <property name="web.xml" value="${webapp.src.dir}/WEB-INF/web.xml"/>
 
     <!-- CLEAN -->
     <target name="clean">
@@ -47,22 +44,20 @@
     </target>
 
     <!-- NATIVE2ASCII -->
-    <target name="native2ascii">
-        <mkdir dir="${locale.dest.dir}"/>
-           <apply executable="${java.home}/bin/native2ascii" failonerror="true">
-               <arg value="-encoding"/>
-               <arg value="${native2ascii.encoding}"/>
-              <srcfile/>
-               <targetfile/>
-               <mapper type="glob" from="*.properties" to="*.properties"/>
-               <fileset dir="${locale.src.dir}" includes="**/*.properties"/>
-           </apply>
-    </target>
+<target name="native2ascii">
+    <!-- ensure output dir for i18n files exists -->
+    <mkdir dir="${locale.dest.dir}/i18n"/>
+    <!-- use Ant's native2ascii task instead of apply/executable -->
+    <native2ascii encoding="${native2ascii.encoding}"
+                  src="${locale.src.dir}/i18n"
+                  dest="${locale.dest.dir}/i18n"
+                  includes="**/*.properties"/>
+</target>
 
     <!-- BUILD: compile + war -->
     <target name="build" depends="compile,native2ascii">
         <mkdir dir="${dist.dir}"/>
-        <!-- собираем WAR вместо JAR -->
+        <!-- собираем WAR -->
         <war destfile="${dist.dir}/${war.name}" webxml="${web.xml}">
             <classes dir="${classes.dir}"/>
             <lib dir="${lib.dir}"/>

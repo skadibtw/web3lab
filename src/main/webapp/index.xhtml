@@ -2,9 +2,12 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="jakarta.faces.html">
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
 <head>
-    <title>3 лабораторная</title>
+    <f:loadBundle basename="i18n.messages" var="msg"/>
+    <title>#{msg['index.title']}</title>
 
     <link rel="stylesheet" href="index.css"/>
     <script type="text/javascript" src="script/clock.js" defer="defer"/>
@@ -15,11 +18,11 @@
     <h3 class="clock-date" id="clock-date"></h3>
     <div class="info-panel">
         <div class="start-panel">
-            <h:button type="button" value="Start" id="start-button" class="round confirm-colors button" outcome="toMain"/>
+            <h:button type="button" value="#{msg['button.start']}" id="start-button" class="round confirm-colors button" outcome="toMain"/>
         </div>
         <div class="invert-colors box-visual shadow" style="margin: 25px">
-            <h1 class="main-title">ЛР по веб-программированию №3</h1>
-            <h3>Хачатрян Геворк, P3217, вариант 85236</h3>
+            <h1 class="main-title">#{msg['index.mainTitle']}</h1>
+            <h3>#{msg['index.authorLine']}</h3>
         </div>
     </div>
 </div>
