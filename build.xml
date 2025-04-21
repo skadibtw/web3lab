@@ -15,8 +15,6 @@
     <property name="war.name" value="${project.name}.war"/>
     <property name="webapp.src.dir" value="${basedir}/src/main/webapp"/>
     <property name="web.xml" value="${webapp.src.dir}/WEB-INF/web.xml"/>
-    <property name="test.src.dir" value="${basedir}/test/java"/>
-    <property name="test.classes.dir" value="${basedir}/test-classes"/>
 
     <!-- CLEAN -->
     <target name="clean">
