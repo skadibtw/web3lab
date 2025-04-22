@@ -1,0 +1,102 @@
+# BUILD.bazel
+
+PROJECT_NAME = "web3lab"
+VERSION = "0.1"
+MAIN_CLASS = "ru.ifmo.se.web3lab.App"
+NATIVE2ASCII_ENCODING = "UTF-8"
+REVS_COUNT = 4
+
+filegroup(
+    name = "webapp_assets",
+    srcs = glob([
+        "src/main/webapp/**/*",
+        "src/main/webapp/WEB-INF/web.xml",  # Explicitly handled separately
+    ]),
+)
+
+filegroup(
+    name = "web_xml",
+    srcs = ["src/main/webapp/WEB-INF/web.xml"],
+)
+
+# Dependencies from lib/
+java_import(
+    name = "lib_deps",
+    jars = glob(["lib/*.jar"]),
+    visibility = ["//visibility:public"],
+)
+
+
+
+java_library(
+    name = "main_lib",
+    srcs = glob(["src/main/java/**/*.java"]),
+    resources = glob(["src/main/resources/**"]),
+    resource_strip_prefix = "src/main/resources",
+    deps = [":lib_deps"],
+)
+
+genrule(
+    name = "war_package",
+    srcs = [
+        ":main_lib",
+        ":webapp_assets",
+        ":web_xml",
+        ":all_jars",
+    ],
+    outs = ["%s.war" % (PROJECT_NAME)],
+    cmd = """
+    mkdir -p temp/WEB-INF/{classes,lib}
+    
+    unzip -qq $(location :main_lib) -d temp/WEB-INF/classes
+    
+    cp -RL $(locations :webapp_assets) temp/
+    cp -RL $(location :web_xml) temp/WEB-INF/
+    
+    cp -RL $(locations :all_jars) temp/WEB-INF/lib/
+    
+    mkdir -p temp/META-INF
+    
+    echo "Manifest-Version: 0.1" > temp/META-INF/MANIFEST.MF
+    echo "Created-By: skadibtw + aeshabb" >> temp/META-INF/MANIFEST.MF
+    echo "Main-Class: %s" >> temp/META-INF/MANIFEST.MF
+    
+    (cd temp && zip -qr ../$@ .)
+    rm -rf temp
+    """ % MAIN_CLASS,
+)
+
+java_test(
+    name = "unit_tests",
+    srcs = glob(["test/java/**/*.java"]),
+    test_class = "ru.ifmo.se.PointTest",  # Update with your test class
+    deps = [
+        ":main_lib",
+        ":lib_deps",
+    ],
+    size = "small",
+)
+
+genrule(
+    name = "revision_history",
+    outs = ["history.zip"],
+    cmd = """
+    TEMPDIR=$$(mktemp -d)
+    for rev in $$(git rev-list -n %d HEAD); do
+      git checkout $$rev
+      mkdir -p $$TEMPDIR/$$rev
+      bazel build //:war_package
+      cp bazel-bin/%s.war $$TEMPDIR/$$rev/
+    done
+    git checkout -
+    (cd $$TEMPDIR && zip -qr $$OLDPWD/$@ .)
+    rm -rf $$TEMPDIR
+    """ % (REVS_COUNT, PROJECT_NAME),
+    tags = ["local"],
+)
+
+filegroup(
+    name = "all_jars",
+    srcs = glob(["lib/*.jar"]),
+    visibility = ["//visibility:public"],
+)

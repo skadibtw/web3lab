@@ -27,7 +27,7 @@
     <target name="resolve-deps" description="Copy Maven deps to lib">
         <echo message="Resolving dependencies into ${lib.dir}…"/>
         <mkdir dir="${lib.dir}"/>
-        <exec executable="mvn.cmd" failonerror="true">
+        <exec executable="mvn" failonerror="true">
             <arg value="dependency:copy-dependencies"/>
             <arg value="-DoutputDirectory=${lib.dir}"/>
         </exec>
