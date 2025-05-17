@@ -18,7 +18,6 @@
     <!-- CLEAN -->
     <target name="clean">
         <delete dir="${classes.dir}"/>
-        <delete dir="${dist.dir}"/>
         <delete dir="${locale.dest.dir}"/>
         <delete dir="${revs.dir}"/>
         <delete dir="${build.dir}"/>
