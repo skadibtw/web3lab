@@ -12,9 +12,9 @@
         <property name="hibernate.show_sql" value="true"/>
         <property name="hibernate.format_sql" value="true"/>
 
-        <property name="jakarta.persistence.jdbc.user" value="s413099"/>
-        <property name="jakarta.persistence.jdbc.password" value="zM0UcctWB16lgH7I"/>
-        <property name="jakarta.persistence.jdbc.url" value="jdbc:postgresql://pg:5432/studs"/>
+        <property name="jakarta.persistence.jdbc.user" value="myuser"/>
+        <property name="jakarta.persistence.jdbc.password" value="mypassword"/>
+        <property name="jakarta.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/mydatabase"/>
 
         <property name="hibernate.dialect" value="org.hibernate.dialect.PostgresPlusDialect"/>
         <property name="show_sql" value="true"/>
